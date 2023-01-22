@@ -4,6 +4,7 @@ import Coins from './Components/Coins/Coins'
 import Navbar from './Components/Navbar/Navbar'
 import {Routes, Route} from 'react-router-dom'
 import Coin from './Components/Coin/Coin'
+import NotFound from './Components/NotFound/Not_found'
 
 
 interface CoinsType{
@@ -57,6 +58,9 @@ function App() {
       <Routes>
         <Route path='/' element={
           <Coins coins={coins}/>
+        }/>
+        <Route path='*' element={
+          <NotFound/>
         }/>
         <Route path='/coin' element={<Coin/>}>
           <Route path=':coinId' element={<Coin/>}/>
