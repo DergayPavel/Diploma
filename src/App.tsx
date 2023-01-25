@@ -5,6 +5,9 @@ import Navbar from './Components/Navbar/Navbar'
 import {Routes, Route} from 'react-router-dom'
 import Coin from './Components/Coin/Coin'
 import NotFound from './Components/NotFound/Not_found'
+import Menu from './Components/Menu/Menu'
+import LogIn from './Components/LogIn/LogIn'
+import MyWallet from './Components/MyWallet/MyWallet'
 
 
 interface CoinsType{
@@ -52,21 +55,21 @@ function App() {
       })
   },[])
  //сделать автообновление данных по времени 1 мин, 5 мин, 10 мин
-  return (
+  return ( 
     <>
       <Navbar/>
+      <Menu/>
       <Routes>
         <Route path='/' element={
           <Coins coins={coins}/>
         }/>
-        <Route path='*' element={
-          <NotFound/>
-        }/>
         <Route path='/coin' element={<Coin/>}>
           <Route path=':coinId' element={<Coin/>}/>
         </Route>
+        <Route path='/SignIn' element={<LogIn/>}/>
+        <Route path='/MyWallet' element={<MyWallet/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
-      
     </>
   )
 }
