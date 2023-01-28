@@ -1,6 +1,7 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
+import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import './Coin.css';
 
@@ -41,7 +42,9 @@ interface CoinType{
 }
 
 function Coin() {
- 
+    
+    const [loading, setLoading] = useState(false);
+
     const params=useParams()
 
     const [coin, setCoin]=useState<CoinType>({})
@@ -49,14 +52,27 @@ function Coin() {
     const url=`https://api.coingecko.com/api/v3/coins/${params.coinId}`
 
     useEffect(()=>{
+        setLoading(true);
         axios.get(url)
-            .then((res)=>{
+            .then((res)=>{        
                 setCoin(res.data)
                 console.log('res ',res.data)
+                setLoading(false)
             })
-            .catch((error)=>{console.log(error)})
+            .catch((error)=>{
+                console.log(error)
+                setLoading(false)})
     },[])
-    return (
+    return (<>
+        {loading
+        ? <div style={{
+            display:'flex',
+            flexDirection:'row',
+            justifyContent:'center'
+        }}>
+            <Loading type='balls' color='black'/>
+        </div>
+        :
         <div>
             <div className="coin-conteiner">
                 <div className="content">
@@ -154,7 +170,8 @@ function Coin() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>}
+    </>
     )
 }
 

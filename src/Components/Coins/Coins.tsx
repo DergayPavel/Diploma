@@ -1,6 +1,7 @@
 import CoinItem from "../CoinItem/CoinItem";
 import {NavLink} from 'react-router-dom'
 import './Coins.css'
+import Loading from "react-loading";
 // import Coin from "../Coin/Coin";
 
 interface CoinsType{
@@ -33,11 +34,21 @@ interface CoinsType{
 }
 
 interface propsType{
-    coins:Array<CoinsType>
+    coins:Array<CoinsType>,
+    load:boolean
 }
 
 function Coins(props:propsType) {
-    return (
+    return (<div>
+        {props.load 
+            ? <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent:'center'
+            }}>
+                <Loading type='balls' color='black'/>
+            </div>
+            :
         <div className="container">
             <div>
                 <div className="heading">
@@ -48,23 +59,23 @@ function Coins(props:propsType) {
                     <p className="hide-mobile">Volume</p>
                     <p className="hide-mobile">Mkt Cap</p>
                 </div>
+                
                 {props.coins.map(coins=>{
-                    return(<>
+                    return(
+                    <>
                         <NavLink    
                             to={`/coin/${coins.id}`} 
-                            // element={<Coin/>}  
                             key={coins.id}
                             style={{
                                 border:'none'
                             }}>
                             <CoinItem coins={coins} key={coins.id}/>
                         </NavLink>
-                        
                     </>
-                        
                     )
                 })}
             </div>
+        </div>}
         </div>
     )
 }
