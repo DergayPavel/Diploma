@@ -8,6 +8,7 @@ import NotFound from './Components/NotFound/Not_found'
 import Menu from './Components/Menu/Menu'
 import LogIn from './Components/LogIn/LogIn'
 import MyWallet from './Components/MyWallet/MyWallet'
+import SignUp from './Components/SignUp/Signup'
 
 
 interface CoinsType{
@@ -39,11 +40,15 @@ interface CoinsType{
   last_updated?: string
 }
 
-function App() {
-  const LogInContext = React.createContext(false);
-  
-  console.log('logincontext: ',LogInContext)
+interface LogInType{
+  logIn:boolean,
+  setLogIn?:(logIn:boolean)=>void
+}
 
+export const LogInContext =React.createContext<LogInType>({logIn:false,setLogIn:()=>{}});
+
+function App() {
+  const [logIn,setLogIn]=useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [coins,setCoins]=useState<Array<CoinsType>>([])
 
@@ -63,7 +68,7 @@ function App() {
  //сделать автообновление данных по времени 1 мин, 5 мин, 10 мин
   return ( 
     <>
-    <LogInContext.Provider value>
+    <LogInContext.Provider value={{logIn:false,setLogIn:()=>{}}}>
       <Navbar/>
       <Menu/>
       <Routes>
@@ -72,6 +77,7 @@ function App() {
           <Route path=':coinId' element={<Coin/>}/>
         </Route>
         <Route path='/SignIn' element={<LogIn/>}/>
+        <Route path='/SignUp' element={<SignUp/>}/>
         <Route path='/MyWallet' element={<MyWallet/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>

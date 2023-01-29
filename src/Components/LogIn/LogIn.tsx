@@ -1,17 +1,20 @@
 import { useState } from "react";
+import { useContext } from 'react';
 import eyeOpen from './open-eye.png'
 import eyeClose from './close-eye.png'
 import './LogIn.css'
-
+import { LogInContext } from '../../App';
+import { Link } from "react-router-dom";
 
 function LogIn() {
+    const logInCont=useContext(LogInContext);
 
     const [show,setShow]=useState(false);
     
     const showPassword=()=>{
         setShow(!show)
     }
-    const [logInBtn, setLogInBtn]=useState<boolean>(false)
+    const [logInBtnState, setLogInBtnState]=useState<boolean>(false)
     
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
@@ -19,10 +22,10 @@ function LogIn() {
     function handleChangeEmail (event:any){
         setEmail(event.target.value);
         if(event.target.value.includes('@') && password.length>7){
-            setLogInBtn(true)
+            setLogInBtnState(true)
         }
         else{
-            setLogInBtn(false)
+            setLogInBtnState(false)
         }
     return;
     }
@@ -30,17 +33,27 @@ function LogIn() {
     function handleChangePassword (event:any){
         setPassword(event.target.value);
         if(email.includes('@') && event.target.value.length>7){
-            setLogInBtn(true)
+            setLogInBtnState(true)
         }
         else{
-            setLogInBtn(false)
+            setLogInBtnState(false)
         }
     return;
+    }
+
+    const changeLogIn=()=>{
+        if(logInCont.setLogIn){
+            logInCont.setLogIn(true);
+        }
+        console.log('func change ', logInCont.logIn)
     }
 
     return (
         <div className="login">
             <div className="form">
+                <label htmlFor="Email">
+                    Email
+                </label>
                 <input
                     className="input-email" 
                     type="email"
@@ -48,6 +61,9 @@ function LogIn() {
                     onChange={(event)=>
                     handleChangeEmail(event)}/>
                 <div className='mainPassword'>
+                    <label htmlFor="Password">
+                        Password
+                    </label>
                     <div className='blockPassword'>
                         <input type={show?'text':'password'}
                             placeholder='Password'
@@ -63,15 +79,22 @@ function LogIn() {
                 <button 
                     className="btn-login" 
                     onClick={(logInBtn)=>{
-                        if(logInBtn){
-                            
-                        }
+                        
+                        if(logInBtnState){ 
+                            console.log('change')
+                            changeLogIn()
+                        } 
+                        console.log('btn:', logInBtnState)
+                        console.log('context: ',logInCont.logIn)
                     }} >
                     Log in
                 </button>
-                <div>
-                    Sign up
-                </div>
+                <Link to='/SignUp'>
+                    <div>
+                        Sign up
+                    </div>
+                </Link>
+                
             </div>
         </div>
     );
