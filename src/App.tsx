@@ -40,6 +40,10 @@ interface CoinsType{
 }
 
 function App() {
+  const LogInContext = React.createContext(false);
+  
+  console.log('logincontext: ',LogInContext)
+
   const [loading, setLoading] = useState(false);
   const [coins,setCoins]=useState<Array<CoinsType>>([])
 
@@ -59,6 +63,7 @@ function App() {
  //сделать автообновление данных по времени 1 мин, 5 мин, 10 мин
   return ( 
     <>
+    <LogInContext.Provider value>
       <Navbar/>
       <Menu/>
       <Routes>
@@ -70,6 +75,7 @@ function App() {
         <Route path='/MyWallet' element={<MyWallet/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
+    </LogInContext.Provider>
     </>
   )
 }
