@@ -35,20 +35,13 @@ interface CoinsType{
 
 interface propsType{
     coins:Array<CoinsType>,
-    load:boolean
+    load:boolean,
+    pageCoins:number,
+    setPageCoins:any
 }
 
 function Coins(props:propsType) {
     return (<div>
-        {props.load 
-            ? <div style={{
-                display:'flex',
-                flexDirection:'row',
-                justifyContent:'center'
-            }}>
-                <Loading type='balls' color='black'/>
-            </div>
-            :
         <div className="container">
             <div>
                 <div className="heading">
@@ -59,7 +52,6 @@ function Coins(props:propsType) {
                     <p className="hide-mobile">Volume</p>
                     <p className="hide-mobile">Mkt Cap</p>
                 </div>
-                
                 {props.coins.map(coins=>{
                     return(
                     <>
@@ -74,8 +66,21 @@ function Coins(props:propsType) {
                     </>
                     )
                 })}
+                {props.load 
+                    ? <div style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'center'
+                        }}>
+                        <Loading type='balls' color='black'/>
+                        </div>
+                        :null}
+                <button onClick={()=>{
+                props.setPageCoins(props.pageCoins+1)
+                }}>addPage</button>
             </div>
-        </div>}
+            
+        </div>
         </div>
     )
 }

@@ -50,21 +50,49 @@ export const LogInContext =React.createContext<LogInType>({logIn:false,setLogIn:
 function App() {
   const [logIn,setLogIn]=useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+  const [pageCoins,setPageCoins] = useState<number>(1)
   const [coins,setCoins]=useState<Array<CoinsType>>([])
+  
+  function addCoins(infoCoins:Array<CoinsType>){
+    infoCoins.map(itemMap=>{
+        let chack=false;
+        coins.forEach(itemFor=>{
+          if(itemFor.id===itemMap.id){
+            chack=true    
+          }
+        })
+        if(!chack){
+          coins.push(itemMap)
+        }
+      
+    })
 
-  const url='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+    console.log('addCoins: ',infoCoins);
+    setCoins(coins);
+  }
+
+  const url=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${pageCoins}&sparkline=false`
+  console.log('url: ',url);
+  
+  function addPage(){
+    setPageCoins(pageCoins+1);
+    
+    console.log('pageCoins: ',pageCoins);
+  }
 
   useEffect(()=>{
     setLoading(true);
     axios.get(url)
       .then((res)=>{
-        setCoins(res.data);
+        console.log('пошел добавление');
+        addCoins(res.data);
+        
         setLoading(false);
       })
       .catch((error)=>{
         console.log(error)
       })
-  },[])
+  },[pageCoins,coins])
  //сделать автообновление данных по времени 1 мин, 5 мин, 10 мин
   return ( 
     <>
@@ -72,7 +100,7 @@ function App() {
       <Navbar/>
       <Menu/>
       <Routes>
-        <Route path='/' element={<Coins coins={coins} load={loading}/>}/>
+        <Route path='/' element={<Coins coins={coins} load={loading} setPageCoins={addPage} pageCoins={pageCoins}/> }/>
         <Route path='/coin' element={<Coin/>}>
           <Route path=':coinId' element={<Coin/>}/>
         </Route>
@@ -85,5 +113,5 @@ function App() {
     </>
   )
 }
-
+ 
 export default App;
