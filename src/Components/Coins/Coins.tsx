@@ -75,9 +75,14 @@ function Coins(props:propsType) {
                         <Loading type='balls' color='black'/>
                         </div>
                         :null}
-                <button onClick={()=>{
-                props.setPageCoins(props.pageCoins+1)
-                }}>addPage</button>
+                        <div className="btn-conteiner">
+                            <button style={{
+                                margin:0
+                            }}onClick={()=>{
+                                props.setPageCoins(props.pageCoins+1)
+                            }}>Add Coins</button>
+                        </div>
+                
             </div>
             
         </div>

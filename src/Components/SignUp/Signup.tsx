@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { LogInContext } from "../../App";
 import './SignUp.css'
 
 interface ProblemType{
@@ -16,6 +17,8 @@ interface UserType{
 }
 
 function SignUp() {
+    const authorizathionCont=useContext(LogInContext);
+
     const [problem, setProblem]=useState<ProblemType>({email:true,userName:true,password:true,repeatPassword:true})
 
     const [user,setUser]=useState<UserType>({email:'',userName:'',password:'',repeatPassword:''})

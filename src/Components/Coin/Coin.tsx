@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import './Coin.css';
+import React from 'react';
+import { PureComponent } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 
 interface CoinType{
     additional_notices?:Array<any>,
@@ -41,6 +45,11 @@ interface CoinType{
     tickers?:any
 }
 
+interface ChartInfoType{
+    date:number,
+    price:number
+}
+
 function Coin() {
     
     const [loading, setLoading] = useState(false);
@@ -48,8 +57,41 @@ function Coin() {
     const params=useParams()
 
     const [coin, setCoin]=useState<CoinType>({})
+
+    const [coinChart, setCoinChart]=useState<Array<ChartInfoType>>([])
     
-    const url=`https://api.coingecko.com/api/v3/coins/${params.coinId}`
+    const url=`https://api.coingecko.com/api/v3/coins/${params.coinId}`;
+    
+    const urlChart=`https://api.coingecko.com/api/v3/coins/${params.coinId}/market_chart?vs_currency=usd&days=max`
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart',
+            },
+        },
+    };
+    
+    function getData(info:any){
+        let arrChart:any=[];
+        console.log('info: ',info.prices);
+        info.prices.map((item:any)=>{
+            let nameFull= new Date(item[0]);
+            let name=nameFull.getDate()+'.'+nameFull.getMonth()+'.'+nameFull.getFullYear()
+            let obj={
+                name:name,
+                price:item[1]
+            }
+            arrChart.push(obj);
+        })
+        setCoinChart(arrChart)
+        console.log('arrChart: ',arrChart)
+    }
 
     useEffect(()=>{
         setLoading(true);
@@ -61,8 +103,18 @@ function Coin() {
             })
             .catch((error)=>{
                 console.log(error)
+                setLoading(false)});
+        axios.get(urlChart)
+            .then((res)=>{        
+                console.log('res Chart data: ',res.data);
+                getData(res.data);
+            })
+            .catch((error)=>{
+                console.log(error)
                 setLoading(false)})
     },[])
+
+
     return (<>
         {loading
         ? <div style={{
@@ -160,6 +212,17 @@ function Coin() {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="content">
+                    <div className="charts">
+                        <LineChart width={700} height={300} data={coinChart}>
+                            <XAxis dataKey="name"/>
+                            <YAxis/>
+                            <CartesianGrid stroke="#eee" strokeDasharray="1 1"/>
+                            <Line type="monotone" dataKey="price" stroke="#8884d8" />
+                        </LineChart>
+                    </div>
+                    
                 </div>
                 <div className="content">
                     <div className="about">

@@ -41,32 +41,22 @@ interface CoinsType{
 }
 
 interface LogInType{
-  logIn:boolean,
-  setLogIn?:(logIn:boolean)=>void
+  authorizathion:boolean,
+  setAuthorizathion?:(authorizathion:boolean)=>void
 }
 
-export const LogInContext =React.createContext<LogInType>({logIn:false,setLogIn:()=>{}});
+export const LogInContext =React.createContext<LogInType>({authorizathion:false,setAuthorizathion:()=>{}});
 
 function App() {
-  const [logIn,setLogIn]=useState<boolean>(false);
+  const [authorizathion,setAuthorizathion]=useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [pageCoins,setPageCoins] = useState<number>(1)
   const [coins,setCoins]=useState<Array<CoinsType>>([])
   
   function addCoins(infoCoins:Array<CoinsType>){
     infoCoins.map(itemMap=>{
-        let chack=false;
-        coins.forEach(itemFor=>{
-          if(itemFor.id===itemMap.id){
-            chack=true    
-          }
-        })
-        if(!chack){
-          coins.push(itemMap)
-        }
-      
-    })
-
+      coins.push(itemMap)
+    });
     console.log('addCoins: ',infoCoins);
     setCoins(coins);
   }
@@ -96,7 +86,7 @@ function App() {
  //сделать автообновление данных по времени 1 мин, 5 мин, 10 мин
   return ( 
     <>
-    <LogInContext.Provider value={{logIn:false,setLogIn:()=>{}}}>
+    <LogInContext.Provider value={{authorizathion:false,setAuthorizathion:()=>{}}}>
       <Navbar/>
       <Menu/>
       <Routes>
@@ -113,5 +103,5 @@ function App() {
     </>
   )
 }
- 
+
 export default App;

@@ -4,10 +4,10 @@ import eyeOpen from './open-eye.png'
 import eyeClose from './close-eye.png'
 import './LogIn.css'
 import { LogInContext } from '../../App';
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate} from "react-router-dom";
 
 function LogIn() {
-    const logInCont=useContext(LogInContext);
+    const authorizathionCont=useContext(LogInContext);
 
     const [show,setShow]=useState(false);
     
@@ -18,6 +18,7 @@ function LogIn() {
     
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
+    const navigate = useNavigate();
     
     function handleChangeEmail (event:any){
         setEmail(event.target.value);
@@ -42,10 +43,8 @@ function LogIn() {
     }
 
     const changeLogIn=()=>{
-        if(logInCont.setLogIn){
-            logInCont.setLogIn(true);
-        }
-        console.log('func change ', logInCont.logIn)
+        authorizathionCont.authorizathion=true;
+        navigate('/');
     }
 
     return (
@@ -79,13 +78,12 @@ function LogIn() {
                 <button 
                     className="btn-login" 
                     onClick={(logInBtn)=>{
-                        
                         if(logInBtnState){ 
                             console.log('change')
                             changeLogIn()
                         } 
                         console.log('btn:', logInBtnState)
-                        console.log('context: ',logInCont.logIn)
+                        console.log('context: ',authorizathionCont.authorizathion)
                     }} >
                     Log in
                 </button>
