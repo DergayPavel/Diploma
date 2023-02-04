@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogInContext } from "../../App";
 import './SignUp.css'
 
@@ -19,18 +19,23 @@ interface UserType{
 function SignUp() {
     const authorizathionCont=useContext(LogInContext);
 
+    const navigate = useNavigate();
+
     const [problem, setProblem]=useState<ProblemType>({email:true,userName:true,password:true,repeatPassword:true})
 
     const [user,setUser]=useState<UserType>({email:'',userName:'',password:'',repeatPassword:''})
 
     function changeUserName(value:string){
         user.userName=value;
+        let Problems=problem
         if(user.userName.toLowerCase()!==user.userName){
-            problem.userName=true
+            Problems.userName=true;
+            console.log('change problem')
         }
         else{
-            problem.userName=false
+            Problems.userName=false
         }
+        setProblem(Problems)
     }
 
     function changeUserEmail(value:string){
@@ -74,6 +79,33 @@ function SignUp() {
         }
     }
 
+    function getProblem(){
+        if(!problem.userName){
+            return(
+                alert('User Name mast have one uppercase and one lowwercase letter')
+            )
+        }
+        else if(!problem.email){
+            return(
+                alert('Email must contain @')
+            )
+        }
+        else if(!problem.password){
+            return(
+                alert('Password must contain more than two letters and numbers')
+            )
+        }
+        else if(!problem.repeatPassword){
+            return(
+                alert('Passwords do not match')
+            )
+        }
+        else{
+            navigate('/SignIn')
+            return;
+            }
+    }
+
     return (
         <div className="signup">
             <div className="signup-form">
@@ -86,10 +118,6 @@ function SignUp() {
                     placeholder="User name"
                     onChange={(event?)=>
                         changeUserName(event.target.value)}/>
-                <label htmlFor="ProblemUserName" 
-                    className="problems-lable">
-                        User Name must contain uppercase and lowercase letters
-                </label>
                 <label htmlFor="Email">
                         Email
                 </label>    
@@ -99,9 +127,6 @@ function SignUp() {
                     placeholder="Email"
                     onChange={(event?)=>
                         changeUserEmail(event.target.value)}/>
-                <label htmlFor="ProblemEmail" className="problems-lable">
-                        Email must contain @
-                </label>
                 <label htmlFor="Password">
                         Password
                 </label>     
@@ -111,9 +136,6 @@ function SignUp() {
                     placeholder="Password"
                     onChange={(event?)=>
                         changeUserPassword(event.target.value)}/>
-                <label htmlFor="ProblemPassword" className="problems-lable">
-                    Password must contain more than two letters and numbers
-                </label>
                 <label htmlFor="PasswordRepeat" >
                         Repeat password
                 </label>
@@ -123,12 +145,10 @@ function SignUp() {
                     placeholder="Pereat password"
                     onChange={(event?)=>
                         changeUserRepeatPassword(event.target.value)}/> 
-                <label htmlFor="ProblemRepeatPassword" className="problems-lable">
-                    Passwords do not match
-                </label>
                 <button className="signup-btn" 
                     onClick={()=>{
                         console.log(user, problem)
+                        getProblem()
                     }}>
                     Sign up
                 </button>
