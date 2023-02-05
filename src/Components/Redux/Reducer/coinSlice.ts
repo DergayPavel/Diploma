@@ -10,10 +10,19 @@ const coinsSlice = createSlice({
   reducers:{
     addWallet(state, action){
       state.wallet.push(action.payload.data)
-    }
+    },
+    delateWallet(state, action){
+      let newArr=[] as any;
+      state.wallet.forEach((item:any)=>{
+        if(item!==action.payload.data){
+          newArr.push(item)
+        }
+      })  
+      state.wallet=newArr
+    },
   }
 
 });
 
-export const {addWallet} =coinsSlice.actions;
+export const {addWallet,delateWallet} =coinsSlice.actions;
 export default coinsSlice.reducer

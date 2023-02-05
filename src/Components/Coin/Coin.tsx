@@ -5,10 +5,9 @@ import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import './Coin.css';
 import React from 'react';
-import { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useDispatch, useSelector } from "react-redux";
-import { addWallet } from "../Redux/Reducer/coinSlice";
+import { addWallet,delateWallet} from "../Redux/Reducer/coinSlice";
 import { LogInContext } from "../../App";
 
 
@@ -56,9 +55,17 @@ interface ChartInfoType{
 function Coin() {
     const authorizathionCont=useContext(LogInContext); 
     
+    const [coin, setCoin]=useState<CoinType>({})
+
     const storeWallet=useSelector((state:any)=>state.coins.wallet);
     
     console.log('storeWallet: ',storeWallet)
+
+    const storeWalletInfo=useSelector((state:any)=>state.coins.storeWalletInfo);
+    
+    console.log('storeWalletInfo: ',storeWalletInfo)
+    
+    const [add,setAdd]=useState<boolean>()
 
     const dispatch=useDispatch();
 
@@ -66,7 +73,6 @@ function Coin() {
 
     const params=useParams()
 
-    const [coin, setCoin]=useState<CoinType>({})
 
     const [coinChart, setCoinChart]=useState<Array<ChartInfoType>>([])
     
@@ -120,6 +126,37 @@ function Coin() {
                 setLoading(false)})
     },[])
 
+    storeWallet.map((item:any)=>{
+        console.log(item)
+        if(item===coin.id && !add){
+            setAdd(true)
+        }
+    })    
+
+    function addBtn(){
+        if(add===true){
+            return(
+                <button onClick={()=>{
+                    setAdd(false);
+                    dispatch(delateWallet({data:coin.id}));
+                }} style={{margin:0}}>
+                    Delate
+                </button>
+                )
+        }
+        else{
+            return(
+                <button onClick={()=>{
+                    dispatch(addWallet({data:coin.id}))
+                    setAdd(true);
+                }} style={{margin:0}}>
+                    Add in my wallet
+                </button>
+            )
+        }
+        
+    }
+ 
     function BtnAddWallet(){
         if(authorizathionCont.authorizathion){
             return(
@@ -128,9 +165,7 @@ function Coin() {
                     display:'flex',
                     justifyContent:'center'
                 }}>
-                    <button onClick={()=>dispatch(addWallet({data:coin.id}))} style={{margin:0}}>
-                        Add In my wallet
-                    </button>
+                    {addBtn()}
                 </div>
             </div>
         )

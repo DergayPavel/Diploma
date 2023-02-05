@@ -3,6 +3,6 @@ import coinsReducer from '../Reducer/coinSlice'
 
 export const store = configureStore({
   reducer: {
-    coins: coinsReducer,
+    coins: coinsReducer, 
   },
 });

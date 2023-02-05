@@ -1,10 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState} from 'react';
+import { Link} from 'react-router-dom';
 import { LogInContext } from '../../App';
 import './Menu.css'
 
 function Menu() {
     const authorizathionCont=useContext(LogInContext);
+
+    const [login,setLogin]=useState(false)
+
     let link='/SignIn';
     if(authorizathionCont.authorizathion){
         link='/MyWallet';

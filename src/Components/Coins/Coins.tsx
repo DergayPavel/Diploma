@@ -2,7 +2,6 @@ import CoinItem from "../CoinItem/CoinItem";
 import {NavLink} from 'react-router-dom'
 import './Coins.css'
 import Loading from "react-loading";
-// import Coin from "../Coin/Coin";
 
 interface CoinsType{
     id?: string,
@@ -77,12 +76,12 @@ function Coins(props:propsType) {
                         :null}
                         <div className="btn-conteiner">
                             <button style={{
-                                margin:0
+                                margin:0 
                             }}onClick={()=>{
                                 props.setPageCoins(props.pageCoins+1)
                             }}>Add Coins</button>
                         </div>
-                
+                 
             </div>
             
         </div>
