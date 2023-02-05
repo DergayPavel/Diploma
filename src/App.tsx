@@ -107,14 +107,14 @@ function App() {
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </LogInContext.Provider>
-    {storeInfo.map((item:any,index:any)=>{
+    {/* {storeInfo.map((item:any,index:any)=>{
       return (
       <p key={index}>
         <li>
           {item}
         </li>
       </p>)
-      })}
+      })} */}
     </>
 
   )
