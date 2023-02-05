@@ -61,7 +61,7 @@ function Coins(props:propsType) {
                             style={{
                                 border:'none'
                             }}>
-                            <CoinItem coins={coins} key={coins.id}/>
+                            <CoinItem coins={coins}/>
                         </NavLink>
                     </>
                     )

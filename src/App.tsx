@@ -9,6 +9,9 @@ import Menu from './Components/Menu/Menu'
 import LogIn from './Components/LogIn/LogIn'
 import MyWallet from './Components/MyWallet/MyWallet'
 import SignUp from './Components/SignUp/Signup'
+import { useSelector } from 'react-redux/es/exports'
+import { useDispatch } from 'react-redux/es/hooks/useDispatch'
+import { createCoins } from './Components/Redux/Reducer/coinSlice'
 
 
 interface CoinsType{
@@ -50,19 +53,25 @@ export const LogInContext =React.createContext<LogInType>({authorizathion:false,
 function App() {
   const [authorizathion,setAuthorizathion]=useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const [pageCoins,setPageCoins] = useState<number>(1)
-  const [coins,setCoins]=useState<Array<CoinsType>>([])
+  const [pageCoins,setPageCoins] = useState<number>(1);
+  const [coins,setCoins]=useState<Array<CoinsType>>([]);
+
+  const storeInfo=useSelector((state:any)=>state.coins.coinsArray);
+  
+  const dispatch=useDispatch();
+
+  console.log('info from store: ',storeInfo);
+
   
   function addCoins(infoCoins:Array<CoinsType>){
     infoCoins.map(itemMap=>{
       coins.push(itemMap)
     });
-    console.log('addCoins: ',infoCoins);
+    dispatch(createCoins({}));
     setCoins(coins);
   }
 
   const url=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${pageCoins}&sparkline=false`
-  console.log('url: ',url);
   
   function addPage(){
     setPageCoins(pageCoins+1);
@@ -74,9 +83,7 @@ function App() {
     setLoading(true);
     axios.get(url)
       .then((res)=>{
-        console.log('пошел добавление');
         addCoins(res.data);
-        
         setLoading(false);
       })
       .catch((error)=>{
@@ -100,7 +107,16 @@ function App() {
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </LogInContext.Provider>
+    {storeInfo.map((item:any,index:any)=>{
+      return (
+      <p key={index}>
+        <li>
+          {item}
+        </li>
+      </p>)
+      })}
     </>
+
   )
 }
 

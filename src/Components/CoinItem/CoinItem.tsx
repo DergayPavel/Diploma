@@ -30,7 +30,7 @@ interface CoinsType{
 }
 
 interface propsType{
-    coins:CoinsType
+    coins:CoinsType,
 }
 
 

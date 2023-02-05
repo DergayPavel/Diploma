@@ -79,7 +79,6 @@ function Coin() {
     
     function getData(info:any){
         let arrChart:any=[];
-        console.log('info: ',info.prices);
         info.prices.map((item:any)=>{
             let nameFull= new Date(item[0]);
             let name=nameFull.getDate()+'.'+nameFull.getMonth()+'.'+nameFull.getFullYear()
@@ -90,7 +89,6 @@ function Coin() {
             arrChart.push(obj);
         })
         setCoinChart(arrChart)
-        console.log('arrChart: ',arrChart)
     }
 
     useEffect(()=>{
@@ -106,7 +104,6 @@ function Coin() {
                 setLoading(false)});
         axios.get(urlChart)
             .then((res)=>{        
-                console.log('res Chart data: ',res.data);
                 getData(res.data);
             })
             .catch((error)=>{
@@ -231,6 +228,17 @@ function Coin() {
                             __html:DOMPurify.sanitize(coin.description ? coin.description.en:''),
                         }}></p>
                     </div>
+                </div>
+                <div className="content">
+                    <div style={{
+                        display:'flex',
+                        justifyContent:'center'
+                    }}>
+                        <button onClick={()=>console.log("add: ",coin.id)} style={{
+                            margin:0
+                        }}>Add In my wallet</button>
+                    </div>
+                    
                 </div>
             </div>
         </div>}

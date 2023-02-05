@@ -1,28 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  usersArr: [],
-  abcd: "123123",
-};
+const initialState={
+  coinsArray:['b','b'],
+  myCount:1
+}
 
-const coinSlice = createSlice({
-  name: "coins",
+const coinsSlice = createSlice({
+  name:'coins',
   initialState,
-  reducers: {
-    changeString: (state, action) => {
-      state.abcd = action.payload.newString;
-    },
-    addUsers: (state, action) => {
-      state.usersArr = action.payload.newArray;
-    },
-    deleteUser: (state, action) => {
-      state.usersArr = state.usersArr.filter(
-        (user: any) => user.id !== action.payload.userId
-      );
-    },
-  },
+  reducers:{
+    createCoins(state, action){
+      console.log('Create Post')
+      console.log('store',state);
+      console.log('action',action);
+      state.coinsArray.push('a');
+    }
+  }
+
 });
 
-export const { changeString, addUsers, deleteUser } = coinSlice.actions;
-
-export const coinReducer = coinSlice.reducer;
+export const {createCoins} =coinsSlice.actions;
+export default coinsSlice.reducer

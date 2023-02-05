@@ -30,7 +30,6 @@ function SignUp() {
         let Problems=problem
         if(user.userName.toLowerCase()!==user.userName){
             Problems.userName=true;
-            console.log('change problem')
         }
         else{
             Problems.userName=false

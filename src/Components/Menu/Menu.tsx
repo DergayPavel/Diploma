@@ -5,8 +5,6 @@ import './Menu.css'
 
 function Menu() {
     const authorizathionCont=useContext(LogInContext);
-    console.log('wallet aut: ',authorizathionCont.authorizathion)
-    const navigate = useNavigate();
     let linkToWallet='/MyWallet'
 
     if(!authorizathionCont.authorizathion){
