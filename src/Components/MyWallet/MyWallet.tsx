@@ -13,38 +13,44 @@ function MyWallet() {
     
     console.log('storeWallet: ',storeWallet);
     
+    const storeWalletImage=useSelector((state:any)=>state.coins.storeWalletImage);
+
+    console.log('storeWalletImage: ',storeWalletImage);
+
     if(authorizathionCont.authorizathion){
         return ( 
         <div>
             <div className="container">
                 <div>
                     <div className="heading" style={{
-                        maxWidth:'200px',
+                        maxWidth:'400px',
                         margin:'10px auto',
                     }}>
                         <p>#</p>
+                        <p>Image</p>
                         <p className="coin-name">My coin</p>
                     </div>
                     {storeWallet.map((item:any,index:number)=>{
                         return(
                         <>
                             <NavLink    
-                                to={`/coin/${item}`} 
-                                key={item}
+                                to={`/coin/${item[0]}`} 
+                                key={item[0]}
                                 style={{
                                     border:'none'
                                 }}>
                                 <div className="container">
                                     <div>
                                         <div className="heading" style={{
-                                            maxWidth:'200px',
+                                            maxWidth:'400px',
                                             margin:'10px auto',
                                         }}>
                                             <div>
-                                                {index}
+                                                {index+1}
                                             </div>
+                                            <img src={item[1]} alt="" /> 
                                             <div>
-                                                {item.toUpperCase()}
+                                                {item[0].toUpperCase()}
                                             </div>
                                         </div>
                                     </div>

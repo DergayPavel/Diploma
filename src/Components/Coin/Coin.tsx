@@ -147,7 +147,7 @@ function Coin() {
         else{
             return(
                 <button onClick={()=>{
-                    dispatch(addWallet({data:coin.id}))
+                    dispatch(addWallet({data:coin.id,image:coin.image.small}))
                     setAdd(true);
                 }} style={{margin:0}}>
                     Add in my wallet
