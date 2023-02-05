@@ -1,12 +1,15 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import './Coin.css';
 import React from 'react';
 import { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useDispatch, useSelector } from "react-redux";
+import { addWallet } from "../Redux/Reducer/coinSlice";
+import { LogInContext } from "../../App";
 
 
 interface CoinType{
@@ -51,7 +54,14 @@ interface ChartInfoType{
 }
 
 function Coin() {
+    const authorizathionCont=useContext(LogInContext); 
     
+    const storeWallet=useSelector((state:any)=>state.coins.wallet);
+    
+    console.log('storeWallet: ',storeWallet)
+
+    const dispatch=useDispatch();
+
     const [loading, setLoading] = useState(false);
 
     const params=useParams()
@@ -96,7 +106,6 @@ function Coin() {
         axios.get(url)
             .then((res)=>{        
                 setCoin(res.data)
-                console.log('res ',res.data)
                 setLoading(false)
             })
             .catch((error)=>{
@@ -111,7 +120,24 @@ function Coin() {
                 setLoading(false)})
     },[])
 
-
+    function BtnAddWallet(){
+        if(authorizathionCont.authorizathion){
+            return(
+            <div className="content">
+                <div style={{
+                    display:'flex',
+                    justifyContent:'center'
+                }}>
+                    <button onClick={()=>dispatch(addWallet({data:coin.id}))} style={{margin:0}}>
+                        Add In my wallet
+                    </button>
+                </div>
+            </div>
+        )
+        }
+        
+        
+    }
     return (<>
         {loading
         ? <div style={{
@@ -229,17 +255,7 @@ function Coin() {
                         }}></p>
                     </div>
                 </div>
-                <div className="content">
-                    <div style={{
-                        display:'flex',
-                        justifyContent:'center'
-                    }}>
-                        <button onClick={()=>console.log("add: ",coin.id)} style={{
-                            margin:0
-                        }}>Add In my wallet</button>
-                    </div>
-                    
-                </div>
+                {BtnAddWallet()}
             </div>
         </div>}
     </>

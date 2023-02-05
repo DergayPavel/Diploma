@@ -9,10 +9,6 @@ import Menu from './Components/Menu/Menu'
 import LogIn from './Components/LogIn/LogIn'
 import MyWallet from './Components/MyWallet/MyWallet'
 import SignUp from './Components/SignUp/Signup'
-import { useSelector } from 'react-redux/es/exports'
-import { useDispatch } from 'react-redux/es/hooks/useDispatch'
-import { createCoins } from './Components/Redux/Reducer/coinSlice'
-
 
 interface CoinsType{
   id?: string,
@@ -51,23 +47,17 @@ interface LogInType{
 export const LogInContext =React.createContext<LogInType>({authorizathion:false,setAuthorizathion:()=>{}});
 
 function App() {
-  const [authorizathion,setAuthorizathion]=useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+
   const [pageCoins,setPageCoins] = useState<number>(1);
-  const [coins,setCoins]=useState<Array<CoinsType>>([]);
-
-  const storeInfo=useSelector((state:any)=>state.coins.coinsArray);
   
-  const dispatch=useDispatch();
-
-  console.log('info from store: ',storeInfo);
-
+  const [coins,setCoins]=useState<Array<CoinsType>>([]);
   
   function addCoins(infoCoins:Array<CoinsType>){
     infoCoins.map(itemMap=>{
       coins.push(itemMap)
     });
-    dispatch(createCoins({}));
+    
     setCoins(coins);
   }
 
@@ -95,26 +85,18 @@ function App() {
     <>
     <LogInContext.Provider value={{authorizathion:false,setAuthorizathion:()=>{}}}>
       <Navbar/>
-      <Menu/>
+      {/* <Menu/> */}
       <Routes>
-        <Route path='/' element={<Coins coins={coins} load={loading} setPageCoins={addPage} pageCoins={pageCoins}/> }/>
-        <Route path='/coin' element={<Coin/>}>
-          <Route path=':coinId' element={<Coin/>}/>
+        <Route path='/' element={<><Menu/><Coins coins={coins} load={loading} setPageCoins={addPage} pageCoins={pageCoins}/> </>}/>
+        <Route path='/coin' element={<><Menu/><Coin/></>}>
+          <Route path=':coinId' element={<><Menu/><Coin/></>}/>
         </Route>
-        <Route path='/SignIn' element={<LogIn/>}/>
-        <Route path='/SignUp' element={<SignUp/>}/>
-        <Route path='/MyWallet' element={<MyWallet/>}/>
+        <Route path='/SignIn' element={<><Menu/><LogIn/></>}/>
+        <Route path='/SignUp' element={<><Menu/><SignUp/></>}/>
+        <Route path='/MyWallet' element={<><Menu/><MyWallet/></>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
     </LogInContext.Provider>
-    {/* {storeInfo.map((item:any,index:any)=>{
-      return (
-      <p key={index}>
-        <li>
-          {item}
-        </li>
-      </p>)
-      })} */}
     </>
 
   )

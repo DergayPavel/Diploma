@@ -1,17 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogInContext } from '../../App';
 import './Menu.css'
 
 function Menu() {
     const authorizathionCont=useContext(LogInContext);
-    let linkToWallet='/MyWallet'
-
-    if(!authorizathionCont.authorizathion){
-        linkToWallet='/SignIn';
+    let link='/SignIn';
+    if(authorizathionCont.authorizathion){
+        link='/MyWallet';
     }
-
+    console.log('risuem');
     function LinkToAuthoriazation(){
+        console.log('aut:', authorizathionCont.authorizathion)
         if(!authorizathionCont.authorizathion){
             return (
                 <Link to='/SignIn'>
@@ -23,7 +23,7 @@ function Menu() {
         }
         else{
             return (
-                <Link to='/'>
+                <Link to='/SignIn'>
                     <div className="menu-logIn" onClick={()=>{
                         authorizathionCont.authorizathion=false}}>
                         LogOut
@@ -35,7 +35,12 @@ function Menu() {
     return (
         <div className="menu">
             <div className="menu-block">
-                <Link to={linkToWallet}>
+                <Link to={'/'}>
+                    <div className="menu-bag" >
+                        Main
+                    </div>
+                </Link>
+                <Link to={link}>
                     <div className="menu-bag" >
                         My wallet
                     </div>
@@ -45,5 +50,4 @@ function Menu() {
         </div>
     )
   }
-  
   export default Menu;
