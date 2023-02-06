@@ -10,12 +10,6 @@ function MyWallet() {
 
     const storeWallet=useSelector((state:any)=>state.coins.wallet);
     
-    console.log('storeWallet: ',storeWallet);
-    
-    const storeWalletImage=useSelector((state:any)=>state.coins.storeWalletImage);
-
-    console.log('storeWalletImage: ',storeWalletImage);
-
     if(authorizathionCont.authorizathion){
         return ( 
         <div>
@@ -30,9 +24,7 @@ function MyWallet() {
                         <p className="coin-name">My coin</p>
                     </div>
                     {storeWallet.map((item:any,index:number)=>{
-                        return(
-                        <>
-                            <NavLink    
+                        return (<NavLink    
                                 to={`/coin/${item[0]}`} 
                                 key={item[0]}
                                 style={{
@@ -54,9 +46,7 @@ function MyWallet() {
                                         </div>
                                     </div>
                                 </div>
-                            </NavLink>
-                        </>
-                        )
+                            </NavLink>)
                     })}
             </div>
         </div>
@@ -71,3 +61,7 @@ function MyWallet() {
 }
 
 export default MyWallet;
+
+function setLoading(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}

@@ -2,6 +2,7 @@ import { propsCoinItemType } from '../../ComponentsType/ComponentsType';
 import './CoinItem.css';
 
 function CoinItem(props:propsCoinItemType) {
+    console.log(props)
     return (
         <div className="coin-row">
             <p>{props.coins.market_cap_rank}</p>

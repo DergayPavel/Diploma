@@ -81,12 +81,9 @@ function LogIn() {
                     className="btn-login" 
                     onClick={(logInBtn)=>{
                         if(logInBtnState){ 
-                            console.log('change')
                             changeLogIn()
-                        } 
-                        console.log('btn:', logInBtnState)
-                        console.log('context: ',authorizathionCont.authorizathion)
-                    }} >
+                        }
+                        }} >
                     Log in
                 </button>
                 <Link to='/SignUp'>

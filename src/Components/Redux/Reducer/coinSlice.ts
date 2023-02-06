@@ -15,7 +15,6 @@ const coinsSlice = createSlice({
     delateWallet(state, action){
       let newArr=[] as any;
       state.wallet.forEach((item:any,index:number)=>{
-        console.log('true or false: ',(item[0]!==action.payload.data[0]))
         if(item[0]!==action.payload.data){
           newArr.push(item)
         }

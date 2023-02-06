@@ -17,12 +17,8 @@ function Coin() {
 
     const storeWallet=useSelector((state:any)=>state.coins.wallet);
     
-    console.log('storeWallet: ',storeWallet)
-
     const storeWalletInfo=useSelector((state:any)=>state.coins.storeWalletInfo);
-    
-    console.log('storeWalletInfo: ',storeWalletInfo)
-    
+
     const [add,setAdd]=useState<boolean>()
 
     const dispatch=useDispatch();
@@ -30,7 +26,6 @@ function Coin() {
     const [loading, setLoading] = useState(false);
 
     const params=useParams()
-
 
     const [coinChart, setCoinChart]=useState<Array<ChartInfoType>>([])
     
@@ -85,7 +80,6 @@ function Coin() {
     },[])
 
     storeWallet.map((item:any)=>{
-        console.log('coin:',coin)
         if(item[0]===coin.id && !add){
             setAdd(true)
         }

@@ -12,9 +12,7 @@ function Menu() {
     if(authorizathionCont.authorizathion){
         link='/MyWallet';
     }
-    console.log('risuem');
     function LinkToAuthoriazation(){
-        console.log('aut:', authorizathionCont.authorizathion)
         if(!authorizathionCont.authorizathion){
             return (
                 <Link to='/SignIn'>
