@@ -4,53 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import './Coin.css';
-import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useDispatch, useSelector } from "react-redux";
 import { addWallet,delateWallet} from "../Redux/Reducer/coinSlice";
 import { LogInContext } from "../../App";
-
-
-interface CoinType{
-    additional_notices?:Array<any>,
-    asset_platform_id?:null,
-    block_time_in_minutes?:number,
-    categories?:Array<string>,
-    coingecko_rank?:number,
-    coingecko_score?:number,
-    community_data?:any,
-    community_score?:number,
-    country_origin?:string,
-    description?:any,
-    detail_platforms?:any,
-    developer_data?:any,
-    developer_score?:number,
-    genesis_date?:string,
-    hashing_algorithm?:string,
-    id?:string,
-    image?:any,
-    last_updated?:string,
-    links?:any,
-    liquidity_score?:number,
-    localization?:any,
-    market_cap_rank?:number,
-    market_data?:any,
-    name?:string,
-    platforms?:any,
-    public_interest_score?:number,
-    public_interest_stats?:any,
-    public_notice?:null,
-    sentiment_votes_down_percentage?:number,
-    sentiment_votes_up_percentage?:number,
-    status_updates?:any,
-    symbol?:string,
-    tickers?:any
-}
-
-interface ChartInfoType{
-    date:number,
-    price:number
-}
+import { ChartInfoType, CoinType } from "../../ComponentsType/ComponentsType";
 
 function Coin() {
     const authorizathionCont=useContext(LogInContext); 
@@ -127,8 +85,8 @@ function Coin() {
     },[])
 
     storeWallet.map((item:any)=>{
-        console.log(item)
-        if(item===coin.id && !add){
+        console.log('coin:',coin)
+        if(item[0]===coin.id && !add){
             setAdd(true)
         }
     })    

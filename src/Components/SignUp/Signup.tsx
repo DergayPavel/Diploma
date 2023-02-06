@@ -1,20 +1,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LogInContext } from "../../App";
+import { ProblemType, UserType } from "../../ComponentsType/ComponentsType";
 import './SignUp.css'
-
-interface ProblemType{
-    email:boolean,
-    userName:boolean,
-    password:boolean,
-    repeatPassword:boolean
-}
-interface UserType{
-    email:String,
-    userName:String,
-    password:String,
-    repeatPassword:String
-}
 
 function SignUp() {
     const authorizathionCont=useContext(LogInContext);

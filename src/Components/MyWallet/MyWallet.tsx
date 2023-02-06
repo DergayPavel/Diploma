@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LogInContext } from "../../App";
-import CoinItem from "../CoinItem/CoinItem";
 
 function MyWallet() {
     const authorizathionCont=useContext(LogInContext);

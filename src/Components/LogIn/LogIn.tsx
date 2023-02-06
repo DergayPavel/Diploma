@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useContext } from 'react';
-import eyeOpen from './open-eye.png'
-import eyeClose from './close-eye.png'
+import eyeOpen from '../../ComponentsImage/open-eye.png'
+import eyeClose from '../../ComponentsImage/close-eye.png'
 import './LogIn.css'
 import { LogInContext } from '../../App';
-import { Link, Navigate, redirect, useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 function LogIn() {
     const authorizathionCont=useContext(LogInContext);
@@ -17,7 +17,9 @@ function LogIn() {
     const [logInBtnState, setLogInBtnState]=useState<boolean>(false)
     
     const [email, setEmail]=useState('')
+
     const [password, setPassword]=useState('')
+
     const navigate = useNavigate();
     
     function handleChangeEmail (event:any){
