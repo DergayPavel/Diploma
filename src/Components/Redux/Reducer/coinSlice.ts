@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-  wallet:[] as any
+  wallet:[] as Array<Array<string>>
 }
 
 const coinsSlice = createSlice({
@@ -13,8 +13,8 @@ const coinsSlice = createSlice({
     },
 
     delateWallet(state, action){
-      let newArr=[] as any;
-      state.wallet.forEach((item:any,index:number)=>{
+      let newArr=[] as Array<Array<string>>;
+      state.wallet.forEach((item:Array<string>,index:number)=>{
         if(item[0]!==action.payload.data){
           newArr.push(item)
         }

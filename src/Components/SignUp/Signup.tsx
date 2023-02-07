@@ -1,12 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LogInContext } from "../../App";
 import { ProblemType, UserType } from "../../ComponentsType/ComponentsType";
 import './SignUp.css'
 
 function SignUp() {
-    const authorizathionCont=useContext(LogInContext);
-
     const navigate = useNavigate();
 
     const [problem, setProblem]=useState<ProblemType>({email:true,userName:true,password:true,repeatPassword:true})
@@ -84,7 +81,7 @@ function SignUp() {
         }
         else if(!problem.repeatPassword){
             return(
-                alert('Passwords do not match')
+                alert('Passwords are not the same')
             )
         }
         else{
@@ -134,7 +131,6 @@ function SignUp() {
                         changeUserRepeatPassword(event.target.value)}/> 
                 <button className="signup-btn" 
                     onClick={()=>{
-                        console.log(user, problem)
                         getProblem()
                     }}>
                     Sign up

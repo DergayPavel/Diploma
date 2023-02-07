@@ -6,12 +6,12 @@ import './Menu.css'
 function Menu() {
     const authorizathionCont=useContext(LogInContext);
 
-    const [login,setLogin]=useState(false)
-
     let link='/SignIn';
+
     if(authorizathionCont.authorizathion){
         link='/MyWallet';
     }
+    
     function LinkToAuthoriazation(){
         if(!authorizathionCont.authorizathion){
             return (

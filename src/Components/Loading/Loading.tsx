@@ -1,4 +1,4 @@
-import ReactLoading from 'react-loading';
+import ReactLoading, { LoadingType } from 'react-loading';
 import './Loading.css';
 
 const Loading = ({ type, color }:any) => (

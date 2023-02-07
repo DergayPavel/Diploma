@@ -8,7 +8,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useDispatch, useSelector } from "react-redux";
 import { addWallet,delateWallet} from "../Redux/Reducer/coinSlice";
 import { LogInContext } from "../../App";
-import { ChartInfoType, CoinType } from "../../ComponentsType/ComponentsType";
+import { ChartInfoType, ChartItemType, CoinType } from "../../ComponentsType/ComponentsType"
 
 function Coin() {
     const authorizathionCont=useContext(LogInContext); 
@@ -16,8 +16,6 @@ function Coin() {
     const [coin, setCoin]=useState<CoinType>({})
 
     const storeWallet=useSelector((state:any)=>state.coins.wallet);
-    
-    const storeWalletInfo=useSelector((state:any)=>state.coins.storeWalletInfo);
 
     const [add,setAdd]=useState<boolean>()
 
@@ -46,9 +44,11 @@ function Coin() {
         },
     };
     
-    function getData(info:any){
+
+
+    function getData(info:ChartItemType){
         let arrChart:any=[];
-        info.prices.map((item:any)=>{
+        info.prices.map((item:Array<number>)=>{
             let nameFull= new Date(item[0]);
             let name=nameFull.getDate()+'.'+nameFull.getMonth()+'.'+nameFull.getFullYear()
             let obj={
@@ -79,7 +79,7 @@ function Coin() {
                 setLoading(false)})
     },[])
 
-    storeWallet.map((item:any)=>{
+    storeWallet.map((item:Array<string>)=>{
         if(item[0]===coin.id && !add){
             setAdd(true)
         }
@@ -92,7 +92,7 @@ function Coin() {
                     setAdd(false);
                     dispatch(delateWallet({data:coin.id}));
                 }} style={{margin:0}}>
-                    Delate
+                    Delete
                 </button>
                 )
         }
